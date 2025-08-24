@@ -1,5 +1,4 @@
 import React from 'react';
-import NotificationPage from './NotificationPage';
 
 const Navbar = () => {
     return (
@@ -9,9 +8,6 @@ const Navbar = () => {
                 <div className='text-xl font-semibold truncate'>
                     <span className='ml-12 sm:ml-1'>Dashboard</span>
                 </div>
-
-                {/* Notification Icon */}
-                <NotificationPage />
             </div>
         </div>
     );

@@ -1,7 +1,9 @@
 import React from 'react';
 import LeftComponent from '../left components/LeftComponent';
 import RightComponent from '../right components/RightComponent';
-import Navbar from '../top components/navbar';
+import Navbar from '../top components/Navbar';
+import LoginPage from '../auth component/AuthPage';
+
 
 const MainPage = () => {
     return (
@@ -12,12 +14,12 @@ const MainPage = () => {
             {/* Main Content Area */}
             <div
                 className="
-                    flex flex-col
-                    w-full
-                    md:w-[calc(100%-20%)] 
-                    ml-0
-                    md:ml-[20%] 
-                    transition-all
+                flex flex-col
+                w-full
+                md:w-[calc(100%-20%)] 
+                ml-0
+                md:ml-[20%] 
+                transition-all
                 "
             >
                 <Navbar />

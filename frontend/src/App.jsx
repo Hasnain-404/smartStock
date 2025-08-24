@@ -1,11 +1,13 @@
 import React from 'react'
-import MainPage from '../components/main components/mainPage'
+import MainPage from '../components/main components/MainPage'
+import LoginPage from '../components/auth component/AuthPage'
 
 const App = () => {
   return (
     <>
       <div>
-        <MainPage />
+        <LoginPage />
+        {/* <MainPage /> */}
       </div>
     </>
   )

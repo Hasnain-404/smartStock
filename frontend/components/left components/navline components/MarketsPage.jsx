@@ -19,8 +19,9 @@ const symbolMeta = {
 };
 
 const MarketsPage = () => {
-    const livePrice = useLiveData(); // Only live price comes from here
+    const livePrice = useLiveData();
     const [apiData, setApiData] = useState({});
+    const [selectedSymbol, setSelectedSymbol] = useState(null); // ✅ NEW
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,10 +32,6 @@ const MarketsPage = () => {
                 );
                 const json = await res.json();
                 result[symbol] = json;
-
-                console.log(result);
-
-
             }
             setApiData(result);
         };
@@ -46,11 +43,12 @@ const MarketsPage = () => {
         <div className="min-h-screen bg-gray-50 p-6">
             <h2 className="text-2xl font-semibold mb-6">Market Overview</h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 cursor-pointer">
+            {/* Forex Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {symbols.map((symbol, index) => {
                     const info = apiData[symbol];
                     const meta = symbolMeta[symbol];
-                    const price = livePrice[symbol.replace('/', '')]?.price; // BTCUSD, EURUSD from live context
+                    const price = livePrice[symbol.replace('/', '')]?.price;
 
                     if (!info) {
                         return (
@@ -67,7 +65,8 @@ const MarketsPage = () => {
                     return (
                         <div
                             key={index}
-                            className="bg-white rounded-2xl shadow p-6 flex flex-col justify-between hover:shadow-lg transition"
+                            onClick={() => setSelectedSymbol(symbol)} // ✅ CLICK HANDLER
+                            className="bg-white rounded-2xl shadow p-6 flex flex-col justify-between hover:shadow-lg transition cursor-pointer"
                         >
                             {/* Header */}
                             <div className="flex items-center gap-4 mb-4">
@@ -97,21 +96,18 @@ const MarketsPage = () => {
                             </div>
 
                             {/* Market status */}
-                            {/* Market status */}
                             <div
                                 className={`mt-4 px-4 py-1 w-fit rounded-lg text-sm font-medium text-white flex items-center gap-1 
-        ${info.is_market_open ? 'bg-green-500' : 'bg-red-500'}`}
+                ${info.is_market_open ? 'bg-green-500' : 'bg-red-500'}`}
                             >
                                 <i className={info.is_market_open ? 'ri-sun-line' : 'ri-moon-line'}></i>
                                 {info.is_market_open ? 'Main market open' : 'Market closed'}
                             </div>
 
-
                             {/* Day Range */}
                             <div className="mt-4">
                                 <p className="text-sm font-medium text-gray-600 mb-1">Day range</p>
 
-                                {/* Range bar */}
                                 <div className="relative w-full h-2 bg-gray-200 rounded-full">
                                     {parseFloat(info.high) !== parseFloat(info.low) && (
                                         <div
@@ -122,7 +118,8 @@ const MarketsPage = () => {
                                                     Math.max(
                                                         0,
                                                         ((parseFloat(info.close) - parseFloat(info.low)) /
-                                                            (parseFloat(info.high) - parseFloat(info.low))) * 100
+                                                            (parseFloat(info.high) - parseFloat(info.low))) *
+                                                        100
                                                     )
                                                 )}%`,
                                             }}
@@ -130,7 +127,6 @@ const MarketsPage = () => {
                                     )}
                                 </div>
 
-                                {/* Labels */}
                                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                                     <span>{info.low || '-'}</span>
                                     <span className="text-black font-medium">{info.close || '-'}</span>
@@ -138,8 +134,7 @@ const MarketsPage = () => {
                                 </div>
                             </div>
 
-
-                            {/* Open and Close */}
+                            {/* Open & Close */}
                             <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-700">
                                 <div>
                                     <p className="text-gray-400 text-xs">Previous close</p>
@@ -154,6 +149,20 @@ const MarketsPage = () => {
                     );
                 })}
             </div>
+
+            {/* Show BuySellCard only when clicked */}
+            {selectedSymbol && (
+                <div className="mt-8">
+                    <h3 className="text-xl font-semibold mb-4">
+                        Trading {selectedSymbol}
+                    </h3>
+                    <BuySellCard
+                        symbol={selectedSymbol}
+                        price={livePrice[selectedSymbol.replace('/', '')]?.price}
+                    />
+
+                </div>
+            )}
         </div>
     );
 };
