@@ -18,7 +18,7 @@ const App = () => {
     const fetchTrades = async () => {
       try {
         // 🔹 Promise to fetch trades
-        const fetchData = axios.get("http://localhost:3000/stocks/user-stocks", { withCredentials: true });
+        const fetchData = axios.get("https://smartstock-75j6.onrender.com/stocks/user-stocks", { withCredentials: true });
         // 🔹 Minimum 3 sec delay
         const minDelay = new Promise(resolve => setTimeout(resolve, 2000));
 
