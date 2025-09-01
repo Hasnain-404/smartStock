@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 // CORS setup
 app.use(cors({
-    origin: "https://smartstock-app.netlify.app/", // frontend URL
+    origin: "https://smartstock-app.netlify.app", // frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true // allow cookies
 }));
