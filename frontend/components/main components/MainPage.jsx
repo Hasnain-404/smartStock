@@ -2,7 +2,6 @@ import React from 'react';
 import LeftComponent from '../left components/LeftComponent';
 import RightComponent from '../right components/RightComponent';
 import Navbar from '../top components/Navbar';
-import LoginPage from '../auth component/AuthPage';
 
 
 const MainPage = () => {

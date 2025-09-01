@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
     PieChart,
     Pie,
@@ -6,17 +7,35 @@ import {
     Tooltip,
     ResponsiveContainer,
     Sector,
-} from 'recharts';
-
-// Chart Data
-const data = [
-    { name: 'Profit', value: 700, color: '#16a34a' },
-    { name: 'Loss', value: 536, color: '#b91c1c' },
-    { name: 'Charge', value: 54, color: '#374151' },
-];
+} from "recharts";
 
 const CustomPieChart = () => {
+    const [data, setData] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null);
+
+    // ✅ Fetch API data
+    useEffect(() => {
+        const fetchReport = async () => {
+            try {
+                const res = await axios.get("http://localhost:3000/reports/get-report", { withCredentials: true });
+                // Make sure your backend returns { profit, loss, charge }
+                const report = res.data;
+
+                const formattedData = [
+                    { name: "Profit", value: Math.round(report.report.totalProfit) || 0, color: "#16a34a" },
+                    { name: "Loss", value: Math.round(report.report.totalLoss) || 0, color: "#b91c1c" },
+                    { name: "Charge", value: Math.round(report.charge) || 0, color: "#374151" },
+                ];
+
+
+                setData(formattedData);
+            } catch (error) {
+                console.error("Error fetching report:", error);
+            }
+        };
+
+        fetchReport();
+    }, []);
 
     const handleMouseEnter = (_, index) => {
         setActiveIndex(index);
@@ -38,7 +57,7 @@ const CustomPieChart = () => {
         } = props;
 
         return (
-            <g style={{ transition: 'all 0.3s ease-in-out' }}>
+            <g style={{ transition: "all 0.3s ease-in-out" }}>
                 <Sector
                     cx={cx}
                     cy={cy}
@@ -53,12 +72,14 @@ const CustomPieChart = () => {
     };
 
     return (
-        <div className='bg-white w-full lg:w-[400px] h-[310px] rounded-xl shadow-xl shadow-gray-200 p-4'>
-            <div className='text-lg md:text-xl font-semibold text-gray-500 mb-4'>Trades Statistics</div>
+        <div className="bg-white w-full lg:w-[400px] h-[310px] rounded-xl shadow-xl shadow-gray-200 p-4">
+            <div className="text-lg md:text-xl font-semibold text-gray-500 mb-4">
+                Trades Statistics
+            </div>
 
-            <div className='flex items-center justify-center sm:justify-start'>
+            <div className="flex items-center justify-center sm:justify-start">
                 {/* Pie Chart */}
-                <div className='w-[200px] sm:w-[230px] h-[200px] sm:h-[230px]'>
+                <div className="w-[200px] sm:w-[230px] h-[200px] sm:h-[230px]">
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
@@ -81,8 +102,8 @@ const CustomPieChart = () => {
                                         fill={entry.color}
                                         cursor="pointer"
                                         style={{
-                                            transition: 'all 0.3s ease-in-out',
-                                            transformOrigin: 'center',
+                                            transition: "all 0.3s ease-in-out",
+                                            transformOrigin: "center",
                                         }}
                                     />
                                 ))}
@@ -92,17 +113,21 @@ const CustomPieChart = () => {
                     </ResponsiveContainer>
                 </div>
 
-                {/* Right side stats (hidden on mobile) */}
-                <div className='pl-6 space-y-3 hidden sm:block'>
+                {/* Right side stats */}
+                <div className="pl-6 space-y-3 hidden sm:block">
                     {data.map((item, idx) => (
                         <div key={idx}>
-                            <div className='text-gray-500 text-base md:text-lg lg:text-xl'>Total {item.name}</div>
-                            <div className='flex items-center gap-2'>
+                            <div className="text-gray-500 text-base md:text-lg lg:text-xl">
+                                Total {item.name}
+                            </div>
+                            <div className="flex items-center gap-2">
                                 <div
-                                    className='w-[12px] h-[12px] rounded-full'
+                                    className="w-[12px] h-[12px] rounded-full"
                                     style={{ backgroundColor: item.color }}
                                 ></div>
-                                <span className='text-base md:text-lg font-semibold'>${item.value}</span>
+                                <span className="text-base md:text-lg font-semibold">
+                                    ${item.value}
+                                </span>
                             </div>
                         </div>
                     ))}

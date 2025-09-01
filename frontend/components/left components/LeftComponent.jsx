@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LeftComponent = () => {
     const [isOpen, setIsOpen] = useState(false);
     const sidebarRef = useRef(null);
+    const navigate = useNavigate(); // 👈 navigate hook
 
     // Detect outside click
     useEffect(() => {
@@ -24,11 +26,20 @@ const LeftComponent = () => {
     const navItems = [
         ['ri-dashboard-line', 'Dashboard', '/dashboard'],
         ['ri-add-large-line', 'Markets', '/markets'],
+        ['ri-stock-line', 'Trades', '/trade-positions'],
         ['ri-bar-chart-horizontal-line', 'Statistics', '/statistics'],
         ['ri-book-open-line', 'Trade Journal', '/trade-journal'],
-        ['ri-alarm-line', 'Price Alerts', '/price-alert'],
-        ['ri-file-paper-2-line', 'Tax Report', '/tax-report'],
     ];
+
+    // Logout function
+    const handleLogout = async () => {
+        try {
+            await axios.post("http://localhost:3000/auth/logout", {}, { withCredentials: true });
+            navigate("/login"); // redirect after logout
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     return (
         <>
@@ -73,6 +84,17 @@ const LeftComponent = () => {
                             <span className='flex-1'>{label}</span>
                         </NavLink>
                     ))}
+
+                    {/* Logout Button */}
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-4 py-3 px-3 rounded-xl w-full text-gray-400 hover:bg-white hover:text-black hover:scale-[1.03] transition-transform duration-150"
+                    >
+                        <span className='w-6 flex justify-center text-xl'>
+                            <i className="ri-logout-box-line"></i>
+                        </span>
+                        <span >Logout</span>
+                    </button>
                 </div>
             </div>
         </>

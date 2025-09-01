@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLiveData } from '../../../context/LiveDataContext';
 import BuySellCard from '../../stock data components/BuySellCard';
+import CandleLoader from '../../top components/CandleLoader'; // 🔹 loader
 
 const symbols = ['BTC/USD', 'EUR/USD'];
 const API_KEY = 'a5dda0add8754f5b912a0fcf4c2f4499';
@@ -21,7 +22,8 @@ const symbolMeta = {
 const MarketsPage = () => {
     const livePrice = useLiveData();
     const [apiData, setApiData] = useState({});
-    const [selectedSymbol, setSelectedSymbol] = useState(null); // ✅ NEW
+    const [selectedSymbol, setSelectedSymbol] = useState(null);
+    const [loading, setLoading] = useState(true); // 🔹 loading state
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,10 +36,14 @@ const MarketsPage = () => {
                 result[symbol] = json;
             }
             setApiData(result);
+            setLoading(false); // 🔹 stop loading
         };
 
         fetchData();
     }, []);
+
+    // 🔹 Show loader while fetching data
+    if (loading) return <CandleLoader />;
 
     return (
         <div className="min-h-screen bg-gray-50 p-6">
@@ -65,7 +71,7 @@ const MarketsPage = () => {
                     return (
                         <div
                             key={index}
-                            onClick={() => setSelectedSymbol(symbol)} // ✅ CLICK HANDLER
+                            onClick={() => setSelectedSymbol(symbol)}
                             className="bg-white rounded-2xl shadow p-6 flex flex-col justify-between hover:shadow-lg transition cursor-pointer"
                         >
                             {/* Header */}
@@ -83,10 +89,7 @@ const MarketsPage = () => {
                             <div className="text-3xl font-bold text-gray-900 mb-1">
                                 {price || 'Loading...'} USD
                             </div>
-                            <div
-                                className={`text-sm font-semibold ${isPositive ? 'text-green-600' : 'text-red-500'
-                                    }`}
-                            >
+                            <div className={`text-sm font-semibold ${isPositive ? 'text-green-600' : 'text-red-500'}`}>
                                 {change} · {percentChange}%
                             </div>
 
@@ -96,10 +99,8 @@ const MarketsPage = () => {
                             </div>
 
                             {/* Market status */}
-                            <div
-                                className={`mt-4 px-4 py-1 w-fit rounded-lg text-sm font-medium text-white flex items-center gap-1 
-                ${info.is_market_open ? 'bg-green-500' : 'bg-red-500'}`}
-                            >
+                            <div className={`mt-4 px-4 py-1 w-fit rounded-lg text-sm font-medium text-white flex items-center gap-1 
+                ${info.is_market_open ? 'bg-green-500' : 'bg-red-500'}`}>
                                 <i className={info.is_market_open ? 'ri-sun-line' : 'ri-moon-line'}></i>
                                 {info.is_market_open ? 'Main market open' : 'Market closed'}
                             </div>
@@ -107,7 +108,6 @@ const MarketsPage = () => {
                             {/* Day Range */}
                             <div className="mt-4">
                                 <p className="text-sm font-medium text-gray-600 mb-1">Day range</p>
-
                                 <div className="relative w-full h-2 bg-gray-200 rounded-full">
                                     {parseFloat(info.high) !== parseFloat(info.low) && (
                                         <div
@@ -126,7 +126,6 @@ const MarketsPage = () => {
                                         ></div>
                                     )}
                                 </div>
-
                                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                                     <span>{info.low || '-'}</span>
                                     <span className="text-black font-medium">{info.close || '-'}</span>
@@ -160,7 +159,6 @@ const MarketsPage = () => {
                         symbol={selectedSymbol}
                         price={livePrice[selectedSymbol.replace('/', '')]?.price}
                     />
-
                 </div>
             )}
         </div>

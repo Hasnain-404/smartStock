@@ -4,7 +4,7 @@ import DashboardPage from '../left components/navline components/DashbordPage';
 import MarketsPage from '../left components/navline components/MarketsPage';
 import StatisticsPage from '../left components/navline components/StatisticsPage';
 import TradeJournalPage from '../left components/navline components/TradeJournalPage';
-import BuySellCard from '../stock data components/BuySellCard';
+import PositionsTable from '../left components/navline components/PositionsTable';
 
 const RightComponent = () => {
     return (
@@ -14,9 +14,9 @@ const RightComponent = () => {
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/markets" element={<MarketsPage />} />
+                <Route path="/trade-positions" element={<PositionsTable />} />
                 <Route path="/statistics" element={<StatisticsPage />} />
                 <Route path="/trade-journal" element={<TradeJournalPage />} />
-                {/* <Route path="/markets/:symbol" element={<BuySellCard />} /> */}
             </Routes>
         </div>
     );

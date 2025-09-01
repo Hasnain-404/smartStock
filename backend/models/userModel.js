@@ -1,30 +1,27 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: [true, "Name is required"],
-            trim: true,
-            minlength: 3,
-            maxlength: 50,
+            required: true,
         },
         email: {
             type: String,
-            required: [true, "Email is required"],
+            required: true,
             unique: true,
-            lowercase: true,
-            trim: true,
         },
         password: {
             type: String,
-            required: [true, "Password is required"],
-            minlength: 6,
+            required: true,
+            length: 8,
         },
-    },
-    { timestamps: true }
-);
+        isVerified: {
+            type: Boolean,
+            default: false,
+        },
+        vericationCode: String,
+    }, { timestamps: true });
 
-const User = mongoose.model("User", userSchema);
-
+const User = mongoose.model('User', userSchema);
 export default User;
