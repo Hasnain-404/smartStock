@@ -17,7 +17,7 @@ const CustomPieChart = () => {
     useEffect(() => {
         const fetchReport = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/reports/get-report", { withCredentials: true });
+                const res = await axios.get("https://smartstock-75j6.onrender.com/reports/get-report", { withCredentials: true });
                 // Make sure your backend returns { profit, loss, charge }
                 const report = res.data;
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-    baseURL: "http://localhost:3000/",
+    baseURL: "https://smartstock-75j6.onrender.com/",
 });
 
 // Agar token hai to har request me bhej do

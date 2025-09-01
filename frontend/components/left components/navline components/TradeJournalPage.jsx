@@ -13,7 +13,7 @@ const TradeJournalPage = () => {
             try {
                 // 1️⃣ Get user trades
                 const tradesRes = await axios.get(
-                    "http://localhost:3000/stocks/user-stocks",
+                    "https://smartstock-75j6.onrender.com/stocks/user-stocks",
                     { withCredentials: true }
                 );
 
@@ -55,7 +55,7 @@ const TradeJournalPage = () => {
                         // 2️⃣ Send balanceAfter to backend
                         try {
                             await axios.post(
-                                "http://localhost:3000/reports/fetch-report",
+                                "https://smartstock-75j6.onrender.com/reports/fetch-report",
                                 {
                                     balanceAfter: balanceAfter.toFixed(2)
                                 },

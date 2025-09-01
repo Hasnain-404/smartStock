@@ -36,7 +36,7 @@ const BuySellCard = ({ symbol, price }) => {
 
         try {
             const res = await axios.post(
-                "http://localhost:3000/stocks/trade",
+                "https://smartstock-75j6.onrender.com/stocks/trade",
                 {
                     symbol: symbol.replace("/", ""),
                     price: parseFloat(price.toFixed(decimalPlaces)),

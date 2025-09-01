@@ -12,7 +12,7 @@ const PositionsTable = () => {
 
     const fetchUserStocks = useCallback(async () => {
         try {
-            const res = await axios.get("http://localhost:3000/stocks/user-stocks", {
+            const res = await axios.get("https://smartstock-75j6.onrender.com/stocks/user-stocks", {
                 withCredentials: true,
             });
             if (res.data.success) {
@@ -78,7 +78,7 @@ const PositionsTable = () => {
 
         try {
             const res = await axios.post(
-                "http://localhost:3000/stocks/close",
+                "https://smartstock-75j6.onrender.com/stocks/close",
                 { id, closeReason: reason, currentPrice: livePrice },
                 { withCredentials: true }
             );

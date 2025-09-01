@@ -16,7 +16,7 @@ const InvestmentPieChart = () => {
     useEffect(() => {
         const fetchReport = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3000/reports/get-report", { withCredentials: true });
+                const { data } = await axios.get("https://smartstock-75j6.onrender.com/reports/get-report", { withCredentials: true });
                 if (data.success && data.report?.investmentDistribution) {
                     const dist = data.report.investmentDistribution;
 

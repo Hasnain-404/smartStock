@@ -12,7 +12,7 @@ const PortfolioLineChart = () => {
     useEffect(() => {
         const fetchTrades = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/stocks/user-stocks", { withCredentials: true });
+                const res = await axios.get("https://smartstock-75j6.onrender.com/stocks/user-stocks", { withCredentials: true });
 
                 const closedTrades = await res.data;
 

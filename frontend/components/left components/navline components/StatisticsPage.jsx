@@ -11,7 +11,7 @@ const StatisticsPage = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/reports/get-report", { withCredentials: true });
+                const res = await axios.get("https://smartstock-75j6.onrender.com/reports/get-report", { withCredentials: true });
                 setStats(res.data.report);
             } catch (error) {
                 console.error("Error fetching stats:", error);

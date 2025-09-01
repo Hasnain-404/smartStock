@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/auth/check", {
+                const res = await axios.get("https://smartstock-75j6.onrender.com/auth/check", {
                     withCredentials: true,
                 });
                 if (res.data.success) {

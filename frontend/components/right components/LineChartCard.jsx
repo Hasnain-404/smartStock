@@ -28,7 +28,7 @@ const LineChartCard = () => {
     useEffect(() => {
         const fetchWeeklyData = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/stocks/user-stocks", {
+                const res = await axios.get("https://smartstock-75j6.onrender.com/stocks/user-stocks", {
                     withCredentials: true,
                 });
 

@@ -17,8 +17,8 @@ const DashboardPage = () => {
         const fetchData = async () => {
             try {
                 const [reportRes, tradesRes] = await Promise.all([
-                    axios.get('http://localhost:3000/reports/get-report', { withCredentials: true }),
-                    axios.get('http://localhost:3000/stocks/user-stocks', { withCredentials: true }),
+                    axios.get('https://smartstock-75j6.onrender.com/reports/get-report', { withCredentials: true }),
+                    axios.get('https://smartstock-75j6.onrender.com/stocks/user-stocks', { withCredentials: true }),
                 ]);
 
                 if (reportRes.data.success) setReport(reportRes.data.report);

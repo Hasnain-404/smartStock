@@ -16,7 +16,7 @@ export default function EmailVerificationPage() {
                 const email = localStorage.getItem("email");
                 if (!email) return;
 
-                const res = await axios.post("http://localhost:3000/auth/check-verified", { email });
+                const res = await axios.post("https://smartstock-75j6.onrender.com/auth/check-verified", { email });
                 if (res.data.verified) {
                     toast.info("Your email is already verified. Please login.");
                     navigate("/login");
@@ -32,7 +32,7 @@ export default function EmailVerificationPage() {
         try {
             setLoading(true);
             const res = await axios.post(
-                "http://localhost:3000/auth/verify-email",
+                "https://smartstock-75j6.onrender.com/auth/verify-email",
                 {
                     email: localStorage.getItem("email"),
                     verificationCode,
